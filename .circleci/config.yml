@@ -32,7 +32,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-  post:
+ 
       - store_artifacts:
       path: /tmp/test-results
       destination: prefix
