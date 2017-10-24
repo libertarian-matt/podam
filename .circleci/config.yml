@@ -34,8 +34,7 @@ jobs:
           
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
+    - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           # fallback to using the latest cache if no exact match is found
@@ -49,6 +48,6 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
 test:
- override:
+  override:
     - mvn clean package
    
