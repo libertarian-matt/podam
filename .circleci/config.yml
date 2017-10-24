@@ -41,4 +41,5 @@ test:
  override:
     - mvn clean package
     
-
+- store_test_results:
+    path: /tmp/test-results
