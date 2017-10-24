@@ -1,3 +1,7 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
 version: 2
 jobs:
   build:
@@ -17,6 +21,7 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     
     steps:
+    
       - run:
           name: Save test results 
           command: |
@@ -30,7 +35,8 @@ jobs:
           
       - checkout
 
-    - restore_cache:
+      # Download and cache dependencies
+      - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
           # fallback to using the latest cache if no exact match is found
@@ -43,7 +49,6 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
-test:
-  override:
-    - mvn clean package
-   
+      # run tests!
+      - run: mvn integration-test
+
