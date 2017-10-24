@@ -33,5 +33,9 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
   post:
-    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-    - find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+      - store_artifacts:
+      path: /tmp/test-results
+      destination: prefix
+
+      - store_test_results:
+       path: /tmp/test-results
