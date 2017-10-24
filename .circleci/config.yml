@@ -32,8 +32,8 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
- 
-- run:
+          
+          - run:
           name: Creating Artifacts
           command: |
             mkdir /tmp/artifacts;
