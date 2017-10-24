@@ -1,3 +1,7 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
 version: 2
 jobs:
   build:
@@ -32,17 +36,9 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-          
-          - run:
-          name: Creating Artifacts
-          command: |
-            mkdir /tmp/artifacts;
-           
+        
+      # run tests!
+      - run: mvn integration-test
 
-      - store_artifacts:
-          path: /tmp/artifacts
-          destination: artifact-file
 
-      - store_artifacts:
-          path: /tmp/artifacts
 
