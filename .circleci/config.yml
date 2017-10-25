@@ -21,8 +21,8 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     
     steps:
-    
-          - run:
+    - checkout
+    - run:
           name: Save test results 
           command: |
             mkdir -p ~/junit/ 
@@ -33,7 +33,7 @@ jobs:
       - store_artifacts:
           path: ~/junit   
           
-      - checkout
+      
 
       # Download and cache dependencies
       - restore_cache:
