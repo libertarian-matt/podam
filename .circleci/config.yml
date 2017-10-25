@@ -1,4 +1,4 @@
-# Java Maven CircleCI 2.0 configuration file
+# Java Gradle CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
@@ -18,30 +18,11 @@ jobs:
 
     environment:
       # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
     
     steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: mvn dependency:go-offline
-
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
-        
-      # run tests!
-      - run: mvn integration-test
-
-      #Summary
-     - run:
+      - run:
           name: Save test results 
           command: |
             mkdir -p ~/junit/ 
@@ -51,4 +32,23 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit   
-          path: /CIRCLE_TEST_REPORTS/junit/
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "build.gradle" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: gradle dependencies
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+        
+      # run tests!
+      - run: gradle test
+
+
+
