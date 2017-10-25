@@ -40,9 +40,14 @@ jobs:
       # run tests!
       - run: mvn integration-test
       
+      post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
+      
       - store_artifacts:
-          path: /code/test-results
+          path: /CIRCLE_TEST_REPORTS/junit/
           destination: prefix
 
       - store_test_results:
-          path: /temp/test-results/
+          path: /CIRCLE_TEST_REPORTS/junit/
