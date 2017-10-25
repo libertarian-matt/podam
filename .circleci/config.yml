@@ -21,19 +21,7 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     
     steps:
-    - checkout
-    - run:
-          name: Save test results 
-          command: |
-            mkdir -p ~/junit/ 
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/junit
-      - store_artifacts:
-          path: ~/junit   
-          
-      
+    - checkout    
 
       # Download and cache dependencies
       - restore_cache:
@@ -57,10 +45,15 @@ jobs:
                
       - run: mvn integration-test
       
-      
-      - store_artifacts:
-          path: /CIRCLE_TEST_REPORTS/junit/
-          destination: prefix
-
+    steps:  
+     - run:
+          name: Save test results 
+          command: |
+            mkdir -p ~/junit/ 
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+          when: always
       - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit   
           path: /CIRCLE_TEST_REPORTS/junit/
