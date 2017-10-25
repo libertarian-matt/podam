@@ -21,7 +21,7 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     
     steps:
-    - checkout    
+      - checkout
 
       # Download and cache dependencies
       - restore_cache:
@@ -30,7 +30,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: mvn package dependency:go-offline
+      - run: mvn dependency:go-offline
 
       - save_cache:
           paths:
@@ -38,14 +38,9 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
       # run tests!
-      
-            post:
-               - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-               - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
-               
       - run: mvn integration-test
-      
-    steps:  
+
+      #Summary
      - run:
           name: Save test results 
           command: |
