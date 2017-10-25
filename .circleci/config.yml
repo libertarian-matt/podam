@@ -32,6 +32,8 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit   
+          
+      - checkout    
 
       # Download and cache dependencies
       - restore_cache:
