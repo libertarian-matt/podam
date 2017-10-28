@@ -38,5 +38,12 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
         
       # run tests!
-      - run: mvn integration-test
+      post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 
+      - run: mvn integration-test
+      
+      step:
+- store_test_results:
+    path: /tmp/test-results
