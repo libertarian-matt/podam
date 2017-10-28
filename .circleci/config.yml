@@ -23,9 +23,7 @@ jobs:
     steps:
       - checkout
        
-       posts:
-       - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-       - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+     
        
       # Download and cache dependencies
       - restore_cache:
@@ -57,3 +55,8 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
+
+
+       posts:
+       - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+       - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
