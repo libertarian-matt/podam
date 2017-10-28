@@ -22,7 +22,10 @@ jobs:
     
     steps:
       - checkout
-
+      
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -41,8 +44,7 @@ jobs:
 
       - run: mvn integration-test
       
-    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+
       
       step:
 - store_test_results:
