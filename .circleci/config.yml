@@ -41,8 +41,5 @@ jobs:
 
       - run: mvn integration-test
       
-
-      
-      step:
 - store_test_results:
     path: /tmp/test-results
