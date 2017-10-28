@@ -41,6 +41,8 @@ jobs:
 
       - run: mvn integration-test
       
+      
+      
       - run:
           name: Save test results 
           command: |
@@ -51,3 +53,7 @@ jobs:
           path: ~/junit
       - store_artifacts:
           path: ~/junit
+          
+          post:
+       - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+       - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
