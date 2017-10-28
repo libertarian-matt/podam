@@ -43,4 +43,4 @@ jobs:
       
       steps:
       - store_test_results:
-        path: /tmp/test-results
+        path: /tmp/test-results\test.xml
